@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,12 @@ namespace Sample
             var hps = _configService.Get<HpsCfg>("hps");
             var hps2 = ConfigContainer.Instance.Get<HpsCfg>("hps");
             var hps3 = _configService.HpsCfg;
+
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config/appsettings.json");
+            using (var fs = File.OpenRead(path))
+            {
+                var data = JsonConfigurationFileParser.Parse(fs);
+            }
 
 
             return Task.CompletedTask;
