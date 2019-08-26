@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aix.ConfigWrapper.MySqlEx
+namespace Aix.ConfigWrapper.DB
 {
     public class DBConfigurationSource : IConfigurationSource
     {

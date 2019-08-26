@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Aix.ConfigWrapper.ConsulEx
+namespace Aix.ConfigWrapper.Consul
 {
     public static class ConfigurationExtensions
     {

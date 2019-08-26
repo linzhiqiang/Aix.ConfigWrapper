@@ -10,7 +10,7 @@ namespace Sample
     {
         T Get<T>(string key);
 
-        HpsCfg HpsCfg { get; }
+        KDNiaoConfig KDNiaoConfig { get; }
     }
 
   public  class ConfigService: IConfigService
@@ -21,23 +21,20 @@ namespace Sample
         }
 
         #region 配置项
-        public HpsCfg HpsCfg
+        public KDNiaoConfig KDNiaoConfig
         {
-            get { return Get<HpsCfg>("hps"); }
+            get { return Get<KDNiaoConfig>("kdniao"); }
         }
 
         #endregion
     }
 
-    public class HpsCfg
+    public class KDNiaoConfig
     {
         public string Url { get; set; }
         public string AppId { get; set; }
 
-        public string ClientId { get; set; }
-
-        public string ClientSecret { get; set; }
-
+        public string AppSecret { get; set; }
     }
 }
 

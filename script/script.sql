@@ -27,7 +27,7 @@ CREATE TABLE `config_item`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `value` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `value` varchar(5000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `status` int(11) NOT NULL,
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `sequence` int(11) NOT NULL,

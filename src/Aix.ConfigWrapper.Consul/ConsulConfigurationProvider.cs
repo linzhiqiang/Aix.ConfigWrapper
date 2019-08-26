@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Aix.ConfigWrapper.ConsulEx
+namespace Aix.ConfigWrapper.Consul
 {
     public class ConsulConfigurationProvider : BaseConfigurationProvider
     {

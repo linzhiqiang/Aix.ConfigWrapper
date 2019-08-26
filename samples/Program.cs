@@ -1,10 +1,12 @@
 ﻿
 using Aix.ConfigWrapper;
-using Aix.ConfigWrapper.ConsulEx;
-using Aix.ConfigWrapper.MySqlEx;
+using Aix.ConfigWrapper.Consul;
+using Aix.ConfigWrapper.DB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace Sample
 {
@@ -19,26 +21,21 @@ namespace Sample
                  })
                   .ConfigureAppConfiguration((hostContext, config) =>
                   {
-                      config.AddJsonFile("config/dotbpe.json", optional: true);
-                      config.AddJsonFile($"config/dotbpe.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                      //config.AddJsonFile("config/dotbpe.json", optional: true);
+                     // config.AddJsonFile($"config/dotbpe.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
 
                       var configFiles = new string[] { "config/appsettings.json", $"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json" };
                       var configuration = ConfigFileParserTools.ParseConfiguration(configFiles);
 
-                      var type = 3;//1=配置文件 2=db   3=consul  
+                      var type = 2;//1=配置文件 2=db   3=consul  
                       switch (type)
                       {
                           case 1:
                               config.AddFileConfiguration(new FileConfigurationOption { ConfigFiles = configFiles , ConfigurationBuilder= config });
                               break;
                           case 2:
-                              var adminDBConnectionString = configuration["connectionStrings:admin"];
-                              config.AddDBMysqlConfiguration(new DBConfigurationOption
-                              {
-                                  ConfigConnectionString = adminDBConnectionString,
-                                  AppCode = "wenbo",
-                                  Groups = new string[] { "common", "ecshop" }
-                              });
+                              ConnectionFactory.Instance.DefaultFactory = new MySqlConnectionFactory();
+                              config.AddDBConfiguration(configuration.GetSection("config").Get<DBConfigurationOption>());
                               break;
                           case 3:
                              // var consulUrl = configuration["consul:url"];
@@ -56,6 +53,14 @@ namespace Sample
 
             host.RunConsoleAsync().Wait();
             Console.WriteLine("服务已退出");
+        }
+    }
+
+    public class MySqlConnectionFactory : IConnectionFactory
+    {
+        public IDbConnection CreateConnection(string connectionString)
+        {
+            return new MySqlConnection(connectionString);
         }
     }
 }

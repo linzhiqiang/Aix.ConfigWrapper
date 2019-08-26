@@ -19,7 +19,7 @@ namespace Sample
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-           var hps4 = _configuration.GetSection("hps").Get<HpsCfg>();
+           var hps4 = _configuration.GetSection("kdniao").Get<KDNiaoConfig>();
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config/appsettings.json");
             using (var fs = File.OpenRead(path))

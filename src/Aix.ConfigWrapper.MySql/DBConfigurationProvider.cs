@@ -1,11 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+﻿using Dapper;
 using System;
-using System.Collections.Generic;
-using Dapper;
 using System.Linq;
 
-namespace Aix.ConfigWrapper.MySqlEx
+namespace Aix.ConfigWrapper.DB
 {
     public class DBConfigurationProvider : BaseConfigurationProvider
     {
@@ -32,7 +29,7 @@ namespace Aix.ConfigWrapper.MySqlEx
         {
             if (_option.Groups == null || _option.Groups.Length == 0) throw new Exception("Groups为空");
 
-            using (var connection = new MySqlConnection(_option.ConfigConnectionString))
+            using (var connection =    ConnectionFactory.Instance.GetConnectionFactory().CreateConnection(_option.ConfigConnectionString))
             {
                 var sql = @"SELECT  B.group_code,item.key,item.value 
                 FROM config_app   as app 

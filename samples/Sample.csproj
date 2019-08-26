@@ -9,11 +9,12 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.17" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Aix.ConfigWrapper.ConsulEx\Aix.ConfigWrapper.ConsulEx.csproj" />
-    <ProjectReference Include="..\src\Aix.ConfigWrapper.MySqlEx\Aix.ConfigWrapper.MySqlEx.csproj" />
+    <ProjectReference Include="..\src\Aix.ConfigWrapper.Consul\Aix.ConfigWrapper.Consul.csproj" />
+    <ProjectReference Include="..\src\Aix.ConfigWrapper.MySql\Aix.ConfigWrapper.DB.csproj" />
     <ProjectReference Include="..\src\Aix.ConfigWrapper\Aix.ConfigWrapper.csproj" />
   </ItemGroup>
 

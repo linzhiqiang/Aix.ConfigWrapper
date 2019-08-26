@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aix.ConfigWrapper.MySqlEx
+namespace Aix.ConfigWrapper.DB
 {
  public   class DBConfigurationOption
     {
@@ -11,5 +11,7 @@ namespace Aix.ConfigWrapper.MySqlEx
         public string AppCode { get; set; }
 
         public string[] Groups { get; set; }
+
+
     }
 }
