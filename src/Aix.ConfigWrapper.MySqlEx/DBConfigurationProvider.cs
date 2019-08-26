@@ -20,6 +20,7 @@ namespace Aix.ConfigWrapper.MySqlEx
             {
                 GetAndAdd();
                 // Console.WriteLine("DB配置加载成功");
+                ConvertToJsonConfiguration();
             }
             catch (Exception ex)
             {
@@ -54,6 +55,7 @@ namespace Aix.ConfigWrapper.MySqlEx
                     }
                 }
             }
+
 
         }
 

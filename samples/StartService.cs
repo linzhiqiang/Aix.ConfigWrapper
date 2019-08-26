@@ -1,4 +1,5 @@
 ﻿using Aix.ConfigWrapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,14 @@ namespace Sample
 {
     public class StartService : IHostedService
     {
-        private IConfigService _configService;
-        public StartService(IConfigService configService)
+        private IConfiguration _configuration;
+        public StartService(IConfiguration configuration)
         {
-            _configService = configService;
+            _configuration = configuration;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var hps = _configService.Get<HpsCfg>("hps");
-            var hps2 = ConfigContainer.Instance.Get<HpsCfg>("hps");
-            var hps3 = _configService.HpsCfg;
+           var hps4 = _configuration.GetSection("hps").Get<HpsCfg>();
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config/appsettings.json");
             using (var fs = File.OpenRead(path))

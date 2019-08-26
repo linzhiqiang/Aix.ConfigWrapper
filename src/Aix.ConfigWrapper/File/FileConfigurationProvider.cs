@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 
 namespace Aix.ConfigWrapper
 {
@@ -15,12 +16,22 @@ namespace Aix.ConfigWrapper
             if (_option.ConfigFiles == null) return;
             try
             {
-                var kvs = ConfigFileParserTools.ParseKV(_option.ConfigFiles);
-                foreach (var item in kvs)
+                //var kvs = ConfigFileParserTools.ParseKV(_option.ConfigFiles);
+                //foreach (var item in kvs)
+                //{
+                //    base.AddData(item.Key, item.Value);
+                //}
+                ////  Console.WriteLine("File配置加载成功");
+                //ConvertToJsonConfiguration();
+
+                foreach (var item in _option.ConfigFiles)
                 {
-                    base.AddData(item.Key, item.Value);
+                    var path = item;
+                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
+                    {
+                        _option.ConfigurationBuilder.AddJsonFile(path);
+                    }
                 }
-                //  Console.WriteLine("File配置加载成功");
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Aix.ConfigWrapper.ConsulEx
@@ -9,6 +10,7 @@ namespace Aix.ConfigWrapper.ConsulEx
     public class ConsulConfigurationProvider : BaseConfigurationProvider
     {
         ConsulConfigurationOption _option;
+
         public ConsulConfigurationProvider(ConsulConfigurationOption option)
         {
             _option = option;
@@ -29,6 +31,8 @@ namespace Aix.ConfigWrapper.ConsulEx
                     }
                 }
                 // Console.WriteLine("Consul配置加载成功");
+
+                ConvertToJsonConfiguration();
             }
             catch (Exception ex)
             {
