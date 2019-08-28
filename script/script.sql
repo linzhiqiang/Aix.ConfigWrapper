@@ -13,6 +13,7 @@
 CREATE TABLE `config_group`  (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `app_id` int(11) NULL DEFAULT NULL,
+  `parent_id` int(11) NULL DEFAULT NULL,
   `group_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `group_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

@@ -20,7 +20,8 @@ namespace Aix.ConfigWrapper
 
         protected void AddData(string key, string value)
         {
-            if (string.IsNullOrEmpty(key)) return;
+            if (string.IsNullOrWhiteSpace(key)) return;
+            if (string.IsNullOrWhiteSpace(value)) return;
 
             key = key.ToLower();
             if (MyData.ContainsKey(key))

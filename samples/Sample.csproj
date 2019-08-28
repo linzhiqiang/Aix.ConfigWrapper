@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Aix.ConfigWrapper.Consul\Aix.ConfigWrapper.Consul.csproj" />
-    <ProjectReference Include="..\src\Aix.ConfigWrapper.MySql\Aix.ConfigWrapper.DB.csproj" />
+    <ProjectReference Include="..\src\Aix.ConfigWrapper.DB\Aix.ConfigWrapper.DB.csproj" />
     <ProjectReference Include="..\src\Aix.ConfigWrapper\Aix.ConfigWrapper.csproj" />
   </ItemGroup>
 
