@@ -7,43 +7,30 @@ namespace Aix.ConfigWrapper
 {
     public abstract class BaseConfigurationProvider : ConfigurationProvider
     {
-        private IDictionary<string, string> _myData;
-        protected IDictionary<string, string> MyData
+        public BaseConfigurationProvider()
         {
-            get
-            {
-                if (_myData == null) _myData = new Dictionary<string, string>();
-                return _myData;
-            }
-            set { _myData = value; }
+            ConfigContainer.Instance.OnConfigChange += Instance_OnConfigChange;
+        }
+        private void Instance_OnConfigChange(ConfigChangeInfo obj)
+        {
+            Reload(obj.GroupCode, obj.Key, obj.Value);
+           
         }
 
-        protected void AddData(string key, string value)
+        public virtual void Reload(string groupCode, string key, string value)
         {
-            if (string.IsNullOrWhiteSpace(key)) return;
-            if (string.IsNullOrWhiteSpace(value)) return;
-
-            key = key.ToLower();
-            if (MyData.ContainsKey(key))
-            {
-                MyData[key] = value;
-            }
-            else
-            {
-                MyData.Add(key, value);
-            }
         }
 
-        protected void ConvertToJsonConfiguration()
+        protected void ConvertToJsonConfiguration(IDictionary<string, string> data)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ ");
             int index = 0;
-            foreach (var item in this.MyData)
+            foreach (var item in data)
             {
                 index++;
                 sb.AppendFormat("\"{0}\":{1}", item.Key, item.Value);
-                if (index != this.MyData.Count)
+                if (index != data.Count)
                 {
                     sb.Append(",");
                 }
@@ -56,6 +43,23 @@ namespace Aix.ConfigWrapper
             using (MemoryStream stream = new MemoryStream(array))
             {
                 this.Data = JsonConfigurationFileParser.Parse(stream);
+            }
+            this.OnReload();
+        }
+
+        protected void AddData(IDictionary<string, string> data, string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(key)) return;
+            if (string.IsNullOrWhiteSpace(value)) return;
+
+            key = key.ToLower();
+            if (data.ContainsKey(key))
+            {
+                data[key] = value;
+            }
+            else
+            {
+                data.Add(key, value);
             }
         }
     }

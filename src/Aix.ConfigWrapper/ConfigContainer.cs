@@ -8,44 +8,25 @@ namespace Aix.ConfigWrapper
     {
         public static ConfigContainer Instance = new ConfigContainer();
 
-        ConcurrentDictionary<string, string> Data = new ConcurrentDictionary<string, string>();
+        public event Action<ConfigChangeInfo> OnConfigChange;
 
-        public void Set(string key, string value)
+        public void Change(ConfigChangeInfo changeInfo)
         {
-            if (Data.ContainsKey(key))
+            if (OnConfigChange != null)
             {
-                Data[key] = value;
-            }
-            else
-            {
-                Data.TryAdd(key, value);
+                OnConfigChange(changeInfo);
             }
         }
 
-        public string GetString(string key)
-        {
-            if (Data.TryGetValue(key, out string value))
-            {
-                return value;
-            }
-            return null;
-        }
+    }
 
-        public T Get<T>(string key)
-        {
-            var strValue = GetString(key);
-            if (string.IsNullOrEmpty(strValue))
-            {
-                return default(T);
-            }
-            if (typeof(T) == typeof(string) || typeof(T).IsValueType)
-            {
-                return (T)Convert.ChangeType(strValue, typeof(T));
-            }
+    public class ConfigChangeInfo
+    {
+        public string GroupCode { get; set; }
 
-            return JsonUtils.FromJson<T>(strValue);
-        }
+        public string Key { get; set; }
 
+        public string Value { get; set; }
     }
 
 }

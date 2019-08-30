@@ -10,7 +10,8 @@ namespace Sample
     {
         internal static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
-            services.AddSingleton<IConfigService,ConfigService>();
+            services.Configure<RedisConfig>(context.Configuration.GetSection("redis"));
+            services.AddSingleton<ConfigChangeTest>();
             services.AddHostedService<StartService>();
         }
     }

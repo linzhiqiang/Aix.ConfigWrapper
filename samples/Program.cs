@@ -21,8 +21,8 @@ namespace Sample
                  })
                   .ConfigureAppConfiguration((hostContext, config) =>
                   {
-                      //config.AddJsonFile("config/dotbpe.json", optional: true);
-                     // config.AddJsonFile($"config/dotbpe.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                      //config.AddJsonFile("config/appsettings.json", optional: true);
+                      //config.AddJsonFile($"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
 
                       var configFiles = new string[] { "config/appsettings.json", $"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json" };
                       var configuration = ConfigFileParserTools.ParseConfiguration(configFiles);
@@ -31,14 +31,14 @@ namespace Sample
                       switch (type)
                       {
                           case 1:
-                              config.AddFileConfiguration(new FileConfigurationOption { ConfigFiles = configFiles , ConfigurationBuilder= config });
+                              config.AddFileConfiguration(new FileConfigurationOption { ConfigFiles = configFiles, ConfigurationBuilder = config });
                               break;
                           case 2:
                               ConnectionFactory.Instance.DefaultFactory = new MySqlConnectionFactory();
-                              config.AddDBConfiguration(configuration.GetSection("config").Get<DBConfigurationOption>());
+                              config.AddDBConfiguration(configuration.GetSection("configCenter").Get<DBConfigurationOption>());
                               break;
                           case 3:
-                             // var consulUrl = configuration["consul:url"];
+                              // var consulUrl = configuration["consul:url"];
                               config.AddConsulConfiguration(configuration.GetSection("consul").Get<ConsulConfigurationOption>());
                               break;
                       }

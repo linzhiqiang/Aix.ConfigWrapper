@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description></Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

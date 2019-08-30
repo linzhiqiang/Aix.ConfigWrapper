@@ -10,7 +10,7 @@ namespace Aix.ConfigWrapper.Consul
     public class ConsulConfigurationProvider : BaseConfigurationProvider
     {
         ConsulConfigurationOption _option;
-
+        IDictionary<string, List<ConsulConfigInfo>> ConfigData = new Dictionary<string, List<ConsulConfigInfo>>();
         public ConsulConfigurationProvider(ConsulConfigurationOption option)
         {
             _option = option;
@@ -30,9 +30,8 @@ namespace Aix.ConfigWrapper.Consul
                         }
                     }
                 }
-                // Console.WriteLine("Consul配置加载成功");
 
-                ConvertToJsonConfiguration();
+                ToJsonConfiguration();
             }
             catch (Exception ex)
             {
@@ -40,18 +39,37 @@ namespace Aix.ConfigWrapper.Consul
             }
         }
 
+        private void ToJsonConfiguration()
+        {
+            IDictionary<string, string> data = new Dictionary<string, string>();
+            foreach (var group in ConfigData)
+            {
+                foreach (var item in group.Value)
+                {
+                    AddData(data, item.Key, item.Value);
+                }
+            }
+
+            base.ConvertToJsonConfiguration(data);
+        }
+
         private void AddByPrefix(ConsulClient consulClient, string prefix)
         {
             var list = consulClient.KV.List(prefix).Result;
+            var values = new List<ConsulConfigInfo>();
+
             foreach (var item in list.Response)
             {
                 string pathKey = item.Key;
                 if (!string.IsNullOrEmpty(pathKey) && item.Value != null && item.Value.Length > 0)
                 {
                     var strValue = Encoding.UTF8.GetString(item.Value);
-                    base.AddData(GetKeyName(pathKey), strValue);
+
+                    values.Add(new ConsulConfigInfo { group_code = prefix, Key = GetKeyName(pathKey), Value = strValue });
                 }
             }
+
+            ConfigData.Add(prefix, values);
         }
 
         static string GetKeyName(string pathKey)
@@ -64,5 +82,13 @@ namespace Aix.ConfigWrapper.Consul
             }
             return str;
         }
+    }
+
+    public class ConsulConfigInfo
+    {
+        public string group_code { get; set; }
+        public string Key { get; set; }
+
+        public string Value { get; set; }
     }
 }
