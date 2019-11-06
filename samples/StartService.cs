@@ -66,7 +66,7 @@ namespace Sample
 
     public class RedisConfig//:IOptions<RedisConfig>
     {
-        public string Configuration { get; set; }
+        public string Configuration { get; set; } = "abc";
 
      //   public RedisConfig Value =>this;
     }

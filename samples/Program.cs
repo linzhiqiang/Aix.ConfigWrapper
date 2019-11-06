@@ -21,13 +21,13 @@ namespace Sample
                  })
                   .ConfigureAppConfiguration((hostContext, config) =>
                   {
-                      //config.AddJsonFile("config/appsettings.json", optional: true);
-                      //config.AddJsonFile($"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                      config.AddJsonFile("config/appsettings.json", optional: true);
+                      config.AddJsonFile($"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
 
                       var configFiles = new string[] { "config/appsettings.json", $"config/appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json" };
-                      var configuration = ConfigFileParserTools.ParseConfiguration(configFiles);
+                    var configuration = ConfigFileParserTools.ParseConfiguration(configFiles);
 
-                      var type = 2;//1=配置文件 2=db   3=consul  
+                      var type = 4;//1=配置文件 2=db   3=consul  
                       switch (type)
                       {
                           case 1:
